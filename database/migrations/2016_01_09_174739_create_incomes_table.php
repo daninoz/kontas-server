@@ -21,6 +21,7 @@ class CreateIncomesTable extends Migration
             $table->string('destination_type');
             $table->unsignedInteger('category_id');
             $table->unsignedInteger('currency_id');
+            $table->timestamps();
         });
     }
 

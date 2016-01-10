@@ -15,6 +15,7 @@ class CreateSimpleExpensesTable extends Migration
         Schema::create('simple_expenses', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('amount');
+            $table->timestamps();
         });
     }
 

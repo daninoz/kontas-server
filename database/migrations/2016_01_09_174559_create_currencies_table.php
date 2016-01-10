@@ -16,6 +16,7 @@ class CreateCurrenciesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->unsignedInteger('exchange_rate');
+            $table->timestamps();
         });
     }
 

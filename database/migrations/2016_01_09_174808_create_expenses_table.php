@@ -22,6 +22,7 @@ class CreateExpensesTable extends Migration
             $table->string('type_type');
             $table->unsignedInteger('category_id');
             $table->unsignedInteger('currency_id');
+            $table->timestamps();
         });
     }
 

@@ -20,6 +20,7 @@ class CreateEstimationsTable extends Migration
             $table->unsignedTinyInteger('day');
             $table->unsignedInteger('category_id');
             $table->unsignedInteger('currency_id');
+            $table->timestamps();
         });
     }
 

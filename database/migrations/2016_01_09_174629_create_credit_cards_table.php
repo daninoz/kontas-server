@@ -17,6 +17,7 @@ class CreateCreditCardsTable extends Migration
             $table->string('name');
             $table->unsignedInteger('fee');
             $table->unsignedInteger('insurance');
+            $table->timestamps();
         });
     }
 

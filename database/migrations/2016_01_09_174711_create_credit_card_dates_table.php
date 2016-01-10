@@ -17,6 +17,7 @@ class CreateCreditCardDatesTable extends Migration
             $table->date('due_date');
             $table->date('deadline');
             $table->unsignedInteger('credit_card_id');
+            $table->timestamps();
         });
     }
 

@@ -16,6 +16,7 @@ class CreateCreditCardPurchasesTable extends Migration
             $table->increments('id');
             $table->unsignedTinyInteger('number_pays');
             $table->unsignedInteger('credit_card_id');
+            $table->timestamps();
         });
     }
 
