@@ -1,31 +1,9 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Routes File
-|--------------------------------------------------------------------------
-|
-| Here is where you will register all of the routes in an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
+Route::resource('category', 'CategoryController', ['only' => ['index', 'store', 'update', 'destroy']]);
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::resource('currency', 'CurrencyController', ['only' => ['index', 'store', 'update', 'destroy']]);
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| This route group applies the "web" middleware group to every route
-| it contains. The "web" middleware group is defined in your HTTP
-| kernel and includes session state, CSRF protection, and more.
-|
-*/
+Route::resource('account', 'AccountController', ['only' => ['index', 'store', 'update', 'destroy']]);
 
-Route::group(['middleware' => ['web']], function () {
-    //
-});
+Route::resource('credit_card', 'CreditCardController', ['only' => ['index', 'store', 'update', 'destroy']]);
