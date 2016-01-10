@@ -7,10 +7,18 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Currency;
+use Mockery\CountValidator\Exception;
+use App\Services\CurrencyService;
 
 class CurrencyController extends Controller
 {
+    protected $currencyService;
+
+    public function __construct(CurrencyService $currencyService)
+    {
+        $this->currencyService = $currencyService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +26,9 @@ class CurrencyController extends Controller
      */
     public function index()
     {
-        //
+        $response = $this->currencyService->getList();
+
+        return response()->json($response);
     }
 
     /**
@@ -29,17 +39,15 @@ class CurrencyController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => ['required', 'unique:currencies', 'max:100'],
-            'exchange_rate' => ['required', 'numeric']
-        ]);
+        try {
+            $this->currencyService->validateInput($request->all());
+        } catch (\Exception $e) {
+            abort(422);
+        }
 
-        $currency = Currency::create([
-            'name' => $request->name,
-            'exchange_rate' => $request->exchange_rate
-        ]);
+        $response = $this->currencyService->create($request);
 
-        return response()->json(['id' => $currency->id]);
+        return response()->json($response);
     }
 
     /**
@@ -51,7 +59,15 @@ class CurrencyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $this->currencyService->validateInput($request->all(), true, $id);
+        } catch (\Exception $e) {
+            abort(422);
+        }
+
+        $response = $this->currencyService->update($request, $id);
+
+        return response()->json($response);
     }
 
     /**
@@ -62,6 +78,6 @@ class CurrencyController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // TODO
     }
 }
