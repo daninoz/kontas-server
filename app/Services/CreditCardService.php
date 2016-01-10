@@ -4,16 +4,16 @@ namespace App\Services;
 
 use App\Helpers\MoneyHelper;
 use Validator;
-use App\Currency;
+use App\CreditCard;
 
-class CurrencyService
+class CreditCardService
 {
     /**
-     * Currency model
+     * Credit Card model
      *
-     * @var Currency
+     * @var CreditCard
      */
-    protected $currency;
+    protected $creditCard;
 
     /**
      * Money Helper
@@ -23,31 +23,32 @@ class CurrencyService
     protected $money;
 
     /**
-     * CurrencyService constructor.
+     * CreditCardService constructor.
      *
-     * @param Currency    $currency
+     * @param CreditCard    $creditCard
      * @param MoneyHelper $money
      */
-    public function __construct(Currency $currency, MoneyHelper $money)
+    public function __construct(CreditCard $creditCard, MoneyHelper $money)
     {
-        $this->currency = $currency;
+        $this->creditCard = $creditCard;
         $this->money = $money;
     }
 
     /**
-     * Get a list of currencies
+     * Get a list of credit cards
      *
      * @return static
      */
     public function getList()
     {
-        $currencies = $this->currency->all();
+        $creditCards = $this->creditCard->all();
 
-        $response = $currencies->map(function ($item) {
+        $response = $creditCards->map(function ($item) {
             return [
                 "id" => $item->id,
                 "name" => $item->name,
-                "exchange_rate" => $this->money->fromStoredMoney($item->exchange_rate),
+                "fee" => $this->money->fromStoredMoney($item->fee),
+                "insurance" => $this->money->fromStoredMoney($item->insurance),
             ];
         });
 
@@ -66,8 +67,9 @@ class CurrencyService
     public function validateInput($input, $update = false, $id = null)
     {
         $rules = [
-            'name' => ['required', 'max:100', 'unique:currencies,name'],
-            'exchange_rate' => ['required', 'numeric']
+            'name' => ['required', 'max:100', 'unique:credit_cards,name'],
+            'fee' => ['required', 'numeric'],
+            'insurance' => ['required', 'numeric'],
         ];
 
         if ($update) {
@@ -82,7 +84,7 @@ class CurrencyService
     }
 
     /**
-     * Creates a new currency
+     * Creates a new credit card
      *
      * @param $input
      *
@@ -90,16 +92,17 @@ class CurrencyService
      */
     public function create($input)
     {
-        $currency = $this->currency->create([
+        $creditCard = $this->creditCard->create([
             'name' => $input->name,
-            'exchange_rate' => $this->money->toStoredMoney($input->exchange_rate)
+            'fee' => $this->money->toStoredMoney($input->fee),
+            'insurance' => $this->money->toStoredMoney($input->insurance),
         ]);
 
-        return ["id" => $currency->id];
+        return ["id" => $creditCard->id];
     }
 
     /**
-     * Updates a currency
+     * Updates a credit card
      *
      * @param $input
      * @param $id
@@ -108,13 +111,14 @@ class CurrencyService
      */
     public function update($input, $id)
     {
-        $currency = $this->currency->findOrFail($id);
+        $creditCard = $this->creditCard->findOrFail($id);
 
-        $currency->update([
+        $creditCard->update([
             'name' => $input->name,
-            'exchange_rate' => $this->money->toStoredMoney($input->exchange_rate)
+            'fee' => $this->money->toStoredMoney($input->fee),
+            'insurance' => $this->money->toStoredMoney($input->insurance),
         ]);
 
-        return ["id" => $currency->id];
+        return ["id" => $creditCard->id];
     }
 }
