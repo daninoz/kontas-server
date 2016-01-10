@@ -12,8 +12,18 @@ use App\Services\CurrencyService;
 
 class CurrencyController extends Controller
 {
+    /**
+     * Currency Service
+     *
+     * @var CurrencyService
+     */
     protected $currencyService;
 
+    /**
+     * CurrencyController constructor.
+     *
+     * @param CurrencyService $currencyService
+     */
     public function __construct(CurrencyService $currencyService)
     {
         $this->currencyService = $currencyService;

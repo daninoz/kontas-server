@@ -8,16 +8,37 @@ use App\Currency;
 
 class CurrencyService
 {
+    /**
+     * Currency model
+     *
+     * @var Currency
+     */
     protected $currency;
 
+    /**
+     * Money Helper
+     *
+     * @var MoneyHelper
+     */
     protected $money;
 
+    /**
+     * CurrencyService constructor.
+     *
+     * @param Currency    $currency
+     * @param MoneyHelper $money
+     */
     public function __construct(Currency $currency, MoneyHelper $money)
     {
         $this->currency = $currency;
         $this->money = $money;
     }
 
+    /**
+     * Get a list of currencies
+     *
+     * @return static
+     */
     public function getList()
     {
         $currencies = $this->currency->all();
@@ -33,6 +54,15 @@ class CurrencyService
         return $response;
     }
 
+    /**
+     * Validate the input
+     *
+     * @param      $input
+     * @param bool $update
+     * @param null $id
+     *
+     * @throws \Exception
+     */
     public function validateInput($input, $update = false, $id = null)
     {
         $rules = [
@@ -51,6 +81,13 @@ class CurrencyService
         }
     }
 
+    /**
+     * Creates a new currency
+     *
+     * @param $input
+     *
+     * @return array
+     */
     public function create($input)
     {
         $currency = $this->currency->create([
@@ -61,6 +98,14 @@ class CurrencyService
         return ["id" => $currency->id];
     }
 
+    /**
+     * Updates a currency
+     *
+     * @param $input
+     * @param $id
+     *
+     * @return array
+     */
     public function update($input, $id)
     {
         $currency = $this->currency->findOrFail($id);
