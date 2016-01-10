@@ -7,25 +7,25 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Services\CurrencyService;
+use App\Services\CategoryService;
 
-class CurrencyController extends Controller
+class CategoryController extends Controller
 {
     /**
-     * Currency Service
+     * Category Service
      *
-     * @var CurrencyService
+     * @var CategoryService
      */
-    protected $currencyService;
+    protected $categoryService;
 
     /**
-     * CurrencyController constructor.
+     * CategoryController constructor.
      *
-     * @param CurrencyService $currencyService
+     * @param CategoryService $categoryService
      */
-    public function __construct(CurrencyService $currencyService)
+    public function __construct(CategoryService $categoryService)
     {
-        $this->currencyService = $currencyService;
+        $this->categoryService = $categoryService;
     }
 
     /**
@@ -35,7 +35,7 @@ class CurrencyController extends Controller
      */
     public function index()
     {
-        $response = $this->currencyService->getList();
+        $response = $this->categoryService->getList();
 
         return response()->json($response);
     }
@@ -49,12 +49,12 @@ class CurrencyController extends Controller
     public function store(Request $request)
     {
         try {
-            $this->currencyService->validateInput($request->all());
+            $this->categoryService->validateInput($request->all());
         } catch (\Exception $e) {
             abort(422);
         }
 
-        $response = $this->currencyService->create($request);
+        $response = $this->categoryService->create($request);
 
         return response()->json($response);
     }
@@ -69,12 +69,12 @@ class CurrencyController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $this->currencyService->validateInput($request->all(), true, $id);
+            $this->categoryService->validateInput($request->all(), true, $id);
         } catch (\Exception $e) {
             abort(422);
         }
 
-        $response = $this->currencyService->update($request, $id);
+        $response = $this->categoryService->update($request, $id);
 
         return response()->json($response);
     }
