@@ -7,3 +7,5 @@ Route::resource('currency', 'CurrencyController', ['only' => ['index', 'store', 
 Route::resource('account', 'AccountController', ['only' => ['index', 'store', 'update', 'destroy']]);
 
 Route::resource('credit_card', 'CreditCardController', ['only' => ['index', 'store', 'update', 'destroy']]);
+
+Route::resource('estimation', 'EstimationController', ['only' => ['index', 'store', 'update', 'destroy']]);
