@@ -1,15 +1,34 @@
 <?php
 
-Route::resource('category', 'CategoryController', ['only' => ['index', 'store', 'update', 'destroy']]);
+$app->get('category', 'CategoryController@index');
+$app->post('category', 'CategoryController@store');
+$app->put('category/{id}', 'CategoryController@update');
+$app->delete('category/{id}', 'CategoryController@destroy');
 
-Route::resource('currency', 'CurrencyController', ['only' => ['index', 'store', 'update', 'destroy']]);
+$app->get('currency', 'CurrencyController@index');
+$app->post('currency', 'CurrencyController@store');
+$app->put('currency/{id}', 'CurrencyController@update');
+$app->delete('currency/{id}', 'CurrencyController@destroy');
 
-Route::resource('account', 'AccountController', ['only' => ['index', 'store', 'update', 'destroy']]);
+$app->get('account', 'AccountController@index');
+$app->post('account', 'AccountController@store');
+$app->put('account/{id}', 'AccountController@update');
+$app->delete('account/{id}', 'AccountController@destroy');
 
-Route::resource('credit_card', 'CreditCardController', ['only' => ['index', 'store', 'update', 'destroy']]);
+$app->get('credit_card', 'CreditCardController@index');
+$app->post('credit_card', 'CreditCardController@store');
+$app->put('credit_card/{id}', 'CreditCardController@update');
+$app->delete('credit_card/{id}', 'CreditCardController@destroy');
 
-Route::resource('estimation', 'EstimationController', ['only' => ['index', 'store', 'update', 'destroy']]);
+$app->get('estimation', 'EstimationController@index');
+$app->post('estimation', 'EstimationController@store');
+$app->put('estimation/{id}', 'EstimationController@update');
+$app->delete('estimation/{id}', 'EstimationController@destroy');
 
-Route::resource('statement', 'StatementController', ['only' => ['index', 'store', 'update']]);
+$app->get('statement', 'StatementController@index');
+$app->post('statement', 'StatementController@store');
+$app->put('statement/{id}', 'StatementController@update');
 
-Route::resource('income', 'IncomeController', ['only' => ['store', 'update', 'destroy']]);
+$app->post('income', 'IncomeController@store');
+$app->put('income/{id}', 'IncomeController@update');
+$app->delete('income/{id}', 'IncomeController@destroy');
