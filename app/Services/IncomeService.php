@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Helpers\MoneyHelper;
-use Validator;
 use App\Income;
 use App\Statement;
 use App\Account;
@@ -72,7 +71,7 @@ class IncomeService
             'currency_id' => ['required', 'exists:currencies,id'],
         ];
 
-        $validator = Validator::make($input, $rules);
+        $validator = app('validator')->make($input, $rules);
 
         if ($validator->fails()) {
             throw new \Exception;

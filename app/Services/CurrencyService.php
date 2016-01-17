@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Helpers\MoneyHelper;
-use Validator;
 use App\Currency;
 
 class CurrencyService
@@ -74,7 +73,7 @@ class CurrencyService
             $rules['name'][2] .= "," . $id;
         }
 
-        $validator = Validator::make($input, $rules);
+        $validator = app('validator')->make($input, $rules);
 
         if ($validator->fails()) {
             throw new \Exception;

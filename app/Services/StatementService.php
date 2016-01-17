@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Helpers\MoneyHelper;
-use Validator;
 use App\Statement;
 
 class StatementService
@@ -67,7 +66,7 @@ class StatementService
             "credit_card_id" => ['required', 'exists:credit_cards,id'],
         ];
 
-        $validator = Validator::make($input, $rules);
+        $validator = app('validator')->make($input, $rules);
 
         if ($validator->fails()) {
             throw new \Exception;

@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Helpers\MoneyHelper;
-use Validator;
 use App\Estimation;
 
 class EstimationService
@@ -78,7 +77,7 @@ class EstimationService
             'currency_id' => ['required', 'exists:currencies,id'],
         ];
 
-        $validator = Validator::make($input, $rules);
+        $validator = app('validator')->make($input, $rules);
 
         if ($validator->fails()) {
             throw new \Exception;
