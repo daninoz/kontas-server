@@ -12,4 +12,4 @@ Route::resource('estimation', 'EstimationController', ['only' => ['index', 'stor
 
 Route::resource('statement', 'StatementController', ['only' => ['index', 'store', 'update']]);
 
-Route::resource('income', 'IncomeController', ['only' => ['index', 'store', 'update', 'destroy']]);
+Route::resource('income', 'IncomeController', ['only' => ['store', 'update', 'destroy']]);

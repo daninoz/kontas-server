@@ -53,30 +53,6 @@ class IncomeService
     }
 
     /**
-     * Get a list of incomes
-     *
-     * @return static
-     */
-    public function getList()
-    {
-        $incomes = $this->income->with(['category', 'currency'])->get();
-
-        $response = $incomes->map(function ($income) {
-            return [
-                "id" => $income->id,
-                "amount" => $this->money->fromStoredMoney($income->amount),
-                "start_date" => $income->start_date,
-                "end_date" => $income->end_date,
-                "day" => $income->day,
-                "currency" => $income->currency->name,
-                "category" => $income->category->name,
-            ];
-        });
-
-        return $response;
-    }
-
-    /**
      * Validate the input
      *
      * @param      $input
@@ -158,14 +134,15 @@ class IncomeService
     {
         $income = $this->income->findOrFail($id);
 
-        $income->update([
-            'amount' => $this->money->toStoredMoney($input->amount),
-            'start_date' => $input->start_date,
-            'end_date' => $input->end_date,
-            'day' => $input->day,
-            'category_id' => $input->category_id,
-            'currency_id' => $input->currency_id,
-        ]);
+        $income->description = $input->description;
+        $income->date = $input->date;
+        $income->amount = $this->money->toStoredMoney($input->amount);
+        $income->category_id = $input->category_id;
+        $income->currency_id = $input->currency_id;
+
+        $destination = $this->getDestination($input->destination_type, $input->destination_id, $income->date);
+
+        $destination->incomes()->save($income);
 
         return ["id" => $income->id];
     }
