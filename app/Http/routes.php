@@ -11,3 +11,5 @@ Route::resource('credit_card', 'CreditCardController', ['only' => ['index', 'sto
 Route::resource('estimation', 'EstimationController', ['only' => ['index', 'store', 'update', 'destroy']]);
 
 Route::resource('statement', 'StatementController', ['only' => ['index', 'store', 'update']]);
+
+Route::resource('income', 'IncomeController', ['only' => ['store', 'update', 'destroy']]);
