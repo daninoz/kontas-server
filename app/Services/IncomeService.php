@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Helpers\MoneyHelper;
 use App\Income;
-use App\Statement;
+use App\StatementService;
 use App\Account;
 
 class IncomeService
@@ -17,18 +17,18 @@ class IncomeService
     protected $income;
 
     /**
-     * Statement model
-     *
-     * @var Statement
+     * Statement service
+
+     * @var StatementService
      */
-    protected $statement;
+    protected $statement_service;
 
     /**
-     * Account model
+     * Account service
      *
-     * @var Account
+     * @var AccountService
      */
-    protected $account;
+    protected $account_service;
 
     /**
      * Money Helper
@@ -40,14 +40,17 @@ class IncomeService
     /**
      * IncomeService constructor.
      *
-     * @param Income    $income
-     * @param MoneyHelper $money
+     * @param Income           $income
+     * @param StatementService $statement_service
+     * @param AccountService   $account_service
+     * @param MoneyHelper      $money
      */
-    public function __construct(Income $income, Statement $statement, Account $account, MoneyHelper $money)
+    public function __construct(Income $income, StatementService $statement_service,
+                                AccountService $account_service, MoneyHelper $money)
     {
         $this->income = $income;
-        $this->statement = $statement;
-        $this->account = $account;
+        $this->statement_service = $statement_service;
+        $this->account_service = $account_service;
         $this->money = $money;
     }
 
@@ -66,6 +69,7 @@ class IncomeService
             'description' => ['required', 'max:250'],
             'date' => ['required', 'date'],
             'amount' => ['required', 'numeric'],
+            'destination_type' => ['required', 'in:account,credit_card'],
             'destination_id' => ['required', 'exists:'.str_plural($input['destination_type']).',id'],
             'category_id' => ['required', 'exists:categories,id'],
             'currency_id' => ['required', 'exists:currencies,id'],
@@ -78,23 +82,22 @@ class IncomeService
         }
     }
 
-    private function getDestinationType($type)
+    private function getDestination($input)
     {
-        switch ($type) {
-            case 'account':
-                return $this->account;
-                break;
+        $destination = null;
+
+        switch ($input->source_type) {
             case 'credit_card':
-                return $this->statement;
+                $destination = $this->statement_service
+                    ->get($input->source_id, $input->date);
+                break;
+            case 'account':
+                $destination = $this->account_service
+                    ->get($input->source_id);
                 break;
         }
-    }
 
-    private function getDestination($type, $id, $date)
-    {
-        $destination_type = $this->getDestinationType($type);
-
-        return $destination_type->getDestination($id, $date);
+        return $destination;
     }
 
     /**
@@ -114,9 +117,10 @@ class IncomeService
         $income->category_id = $input->category_id;
         $income->currency_id = $input->currency_id;
 
-        $destination = $this->getDestination($input->destination_type, $input->destination_id, $income->date);
+        $source = $this->getDestination($input);
+        $income->source()->associate($source);
 
-        $destination->incomes()->save($income);
+        $income->save();
 
         return ["id" => $income->id];
     }

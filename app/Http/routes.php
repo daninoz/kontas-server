@@ -32,3 +32,5 @@ $app->put('statement/{id}', 'StatementController@update');
 $app->post('income', 'IncomeController@store');
 $app->put('income/{id}', 'IncomeController@update');
 $app->delete('income/{id}', 'IncomeController@destroy');
+
+$app->post('expense', 'ExpenseController@store');
