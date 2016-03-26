@@ -8,7 +8,7 @@ class Account extends Model
 {
     protected $fillable = ['name'];
 
-    public function getDestination($id, $date = null)
+    public function getDestination($id)
     {
         return $this->findOrFail($id);
     }
@@ -16,5 +16,10 @@ class Account extends Model
     public function incomes()
     {
         return $this->morphMany('App\Income', 'destination');
+    }
+
+    public function expenses()
+    {
+        return $this->morphMany('App\Expense', 'source');
     }
 }

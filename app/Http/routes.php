@@ -33,5 +33,6 @@ $app->group(['prefix' => 'api', 'namespace' => 'App\Http\Controllers'], function
     $app->post('income', 'IncomeController@store');
     $app->put('income/{id}', 'IncomeController@update');
     $app->delete('income/{id}', 'IncomeController@destroy');
-});
 
+    $app->post('expense', 'ExpenseController@store');
+});

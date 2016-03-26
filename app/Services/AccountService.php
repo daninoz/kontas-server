@@ -23,6 +23,11 @@ class AccountService
         $this->account = $account;
     }
 
+    public function get($id)
+    {
+        return $this->account->findOrFail($id);
+    }
+
     /**
      * Get a list of accounts
      *

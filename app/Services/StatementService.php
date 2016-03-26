@@ -2,26 +2,34 @@
 
 namespace App\Services;
 
-use App\Helpers\MoneyHelper;
 use App\Statement;
 
 class StatementService
 {
     /**
      * Statement model
-     *
-     * @var Statement
+
+     * @var StatementService
      */
     protected $statement;
 
     /**
      * StatementService constructor.
      *
-     * @param Statement    $statement
+     * @param Statement $statement
      */
     public function __construct(Statement $statement)
     {
         $this->statement = $statement;
+    }
+
+    public function get($date, $credit_card_id, $installment = 0)
+    {
+        if ($installment == 0) {
+            return $this->statement->getCurrent($credit_card_id, $date);
+        } else {
+            return $this->statement->getFuture($installment, $credit_card_id, $date);
+        }
     }
 
     /**
