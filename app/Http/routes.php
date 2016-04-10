@@ -12,6 +12,7 @@ $app->group(['prefix' => 'api', 'namespace' => 'App\Http\Controllers'], function
     $app->delete('currency/{id}', 'CurrencyController@destroy');
 
     $app->get('account', 'AccountController@index');
+    $app->get('account/{id}', 'AccountController@get');
     $app->post('account', 'AccountController@store');
     $app->put('account/{id}', 'AccountController@update');
     $app->delete('account/{id}', 'AccountController@destroy');
