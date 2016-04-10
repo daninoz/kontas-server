@@ -23,6 +23,13 @@ class AccountService
         $this->account = $account;
     }
 
+    /**
+     * Get an account
+     * 
+     * @param $id
+     *
+     * @return mixed
+     */
     public function get($id)
     {
         return $this->account->findOrFail($id);
