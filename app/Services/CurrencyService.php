@@ -62,7 +62,13 @@ class CurrencyService
      */
     public function get($id)
     {
-        return $this->currency->findOrFail($id);
+        $currency = $this->currency->findOrFail($id);
+
+        return [
+            "id" => $currency->id,
+            "name" => $currency->name,
+            "exchange_rate" => $this->money->fromStoredMoney($currency->exchange_rate),
+        ];
     }
 
     /**
