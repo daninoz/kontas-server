@@ -54,6 +54,18 @@ class CurrencyService
     }
 
     /**
+     * Get a currency
+     *
+     * @param $id
+     *
+     * @return mixed
+     */
+    public function get($id)
+    {
+        return $this->currency->findOrFail($id);
+    }
+
+    /**
      * Validate the input
      *
      * @param      $input

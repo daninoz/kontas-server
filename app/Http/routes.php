@@ -7,6 +7,7 @@ $app->group(['prefix' => 'api', 'namespace' => 'App\Http\Controllers'], function
     $app->delete('category/{id}', 'CategoryController@destroy');
 
     $app->get('currency', 'CurrencyController@index');
+    $app->get('currency/{id}', 'CurrencyController@get');
     $app->post('currency', 'CurrencyController@store');
     $app->put('currency/{id}', 'CurrencyController@update');
     $app->delete('currency/{id}', 'CurrencyController@destroy');
