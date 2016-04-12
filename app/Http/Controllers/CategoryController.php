@@ -40,6 +40,18 @@ class CategoryController extends Controller
     }
 
     /**
+     * Returns a resource
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function get($id)
+    {
+        $response = $this->categoryService->get($id);
+
+        return response()->json($response);
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

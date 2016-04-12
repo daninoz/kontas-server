@@ -24,6 +24,18 @@ class CategoryService
     }
 
     /**
+     * Get a category
+     *
+     * @param $id
+     *
+     * @return mixed
+     */
+    public function get($id)
+    {
+        return $this->category->findOrFail($id);
+    }
+
+    /**
      * Get a list of categories
      *
      * @return static
