@@ -58,6 +58,28 @@ class EstimationService
     }
 
     /**
+     * Get a currency
+     *
+     * @param $id
+     *
+     * @return mixed
+     */
+    public function get($id)
+    {
+        $estimation = $this->estimation->findOrFail($id);
+
+        return [
+            "id" => $estimation->id,
+            "amount" => $this->money->fromStoredMoney($estimation->amount),
+            "start_date" => $estimation->start_date,
+            "end_date" => $estimation->end_date,
+            "day" => $estimation->day,
+            "currency" => $estimation->currency->name,
+            "category" => $estimation->category->name,
+        ];
+    }
+
+    /**
      * Validate the input
      *
      * @param      $input

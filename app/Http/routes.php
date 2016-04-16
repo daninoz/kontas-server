@@ -25,6 +25,7 @@ $app->group(['prefix' => 'api', 'namespace' => 'App\Http\Controllers'], function
     $app->delete('credit-card/{id}', 'CreditCardController@destroy');
 
     $app->get('estimation', 'EstimationController@index');
+    $app->get('estimation/{id}', 'EstimationController@get');
     $app->post('estimation', 'EstimationController@store');
     $app->put('estimation/{id}', 'EstimationController@update');
     $app->delete('estimation/{id}', 'EstimationController@destroy');
