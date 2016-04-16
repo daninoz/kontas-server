@@ -18,11 +18,11 @@ $app->group(['prefix' => 'api', 'namespace' => 'App\Http\Controllers'], function
     $app->put('account/{id}', 'AccountController@update');
     $app->delete('account/{id}', 'AccountController@destroy');
 
-    $app->get('credit_card', 'CreditCardController@index');
-    $app->get('credit_card/{id}', 'CreditCardController@get');
-    $app->post('credit_card', 'CreditCardController@store');
-    $app->put('credit_card/{id}', 'CreditCardController@update');
-    $app->delete('credit_card/{id}', 'CreditCardController@destroy');
+    $app->get('credit-card', 'CreditCardController@index');
+    $app->get('credit-card/{id}', 'CreditCardController@get');
+    $app->post('credit-card', 'CreditCardController@store');
+    $app->put('credit-card/{id}', 'CreditCardController@update');
+    $app->delete('credit-card/{id}', 'CreditCardController@destroy');
 
     $app->get('estimation', 'EstimationController@index');
     $app->post('estimation', 'EstimationController@store');
