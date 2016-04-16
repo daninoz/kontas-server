@@ -19,6 +19,7 @@ $app->group(['prefix' => 'api', 'namespace' => 'App\Http\Controllers'], function
     $app->delete('account/{id}', 'AccountController@destroy');
 
     $app->get('credit_card', 'CreditCardController@index');
+    $app->get('credit_card/{id}', 'CreditCardController@get');
     $app->post('credit_card', 'CreditCardController@store');
     $app->put('credit_card/{id}', 'CreditCardController@update');
     $app->delete('credit_card/{id}', 'CreditCardController@destroy');

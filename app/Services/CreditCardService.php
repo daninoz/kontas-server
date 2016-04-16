@@ -34,6 +34,25 @@ class CreditCardService
     }
 
     /**
+     * Get a credit card
+     *
+     * @param $id
+     *
+     * @return mixed
+     */
+    public function get($id)
+    {
+        $creditCard = $this->creditCard->findOrFail($id);
+
+        return [
+            "id" => $creditCard->id,
+            "name" => $creditCard->name,
+            "fee" => $this->money->fromStoredMoney($creditCard->fee),
+            "insurance" => $this->money->fromStoredMoney($creditCard->insurance),
+        ];
+    }
+
+    /**
      * Get a list of credit cards
      *
      * @return static
