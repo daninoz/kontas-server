@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Helpers\MoneyHelper;
 use App\Estimation;
+use DateTime;
 
 class EstimationService
 {
@@ -71,11 +72,11 @@ class EstimationService
         return [
             "id" => $estimation->id,
             "amount" => $this->money->fromStoredMoney($estimation->amount),
-            "start_date" => $estimation->start_date,
-            "end_date" => $estimation->end_date,
+            "start_date" => $estimation->start_date_formatted,
+            "end_date" => $estimation->end_date_formatted,
             "day" => $estimation->day,
-            "currency" => $estimation->currency->name,
-            "category" => $estimation->category->name,
+            "currency_id" => $estimation->currency->id,
+            "category_id" => $estimation->category->id,
         ];
     }
 
@@ -115,14 +116,19 @@ class EstimationService
      */
     public function create($input)
     {
-        $estimation = $this->estimation->create([
+        $data = [
             'amount' => $this->money->toStoredMoney($input->amount),
-            'start_date' => $input->start_date,
-            'end_date' => $input->end_date,
+            'start_date' => new DateTime($input->start_date),
             'day' => $input->day,
             'category_id' => $input->category_id,
             'currency_id' => $input->currency_id,
-        ]);
+        ];
+
+        if (array_key_exists('end_date', $input)) {
+            $data->end_date = new DateTime($input->end_date);
+        }
+
+        $estimation = $this->estimation->create($data);
 
         return ["id" => $estimation->id];
     }
@@ -139,14 +145,19 @@ class EstimationService
     {
         $estimation = $this->estimation->findOrFail($id);
 
-        $estimation->update([
+        $data = [
             'amount' => $this->money->toStoredMoney($input->amount),
-            'start_date' => $input->start_date,
-            'end_date' => $input->end_date,
+            'start_date' => new DateTime($input->start_date),
             'day' => $input->day,
             'category_id' => $input->category_id,
             'currency_id' => $input->currency_id,
-        ]);
+        ];
+
+        if (array_key_exists('end_date', $input)) {
+            $data->end_date = new DateTime($input->end_date);
+        }
+
+        $estimation->update($data);
 
         return ["id" => $estimation->id];
     }
